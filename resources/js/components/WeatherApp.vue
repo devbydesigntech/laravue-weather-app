@@ -1,6 +1,7 @@
 <template>
   <div class="text-white mb-8">
     <div class="places-input text-gray-800">
+      <!-- Search bar -->
       <input type="search" id="input-map" class="form-control" placeholder="Search Location, Post-code..." />
 
       <p>Selected: <strong id="address-value">none</strong></p>
@@ -57,13 +58,13 @@ export default {
   mounted() {
     this.fetchData()
 
-    var placesAutocomplete = places({
+    const placesAutocomplete = places({
         appId: 'plEMJKXHGKZL',
         apiKey: 'dcbfdd49e960293286f055c4dfeb4c5c',
         container: document.querySelector('#input-map')
       });
 
-    var $address = document.querySelector('#address-value')
+    const $address = document.querySelector('#address-value')
       placesAutocomplete.on('change', (e) => {
         $address.textContent = e.suggestion.value
         this.location.name = `${e.suggestion.name}, ${e.suggestion.country}`
@@ -75,12 +76,12 @@ export default {
         $address.textContent = 'none';
       });
     
-      var map = L.map('map-example-container', {
-    scrollWheelZoom: false,
-    zoomControl: false
-  });
+    const map = L.map('map-example-container', {
+      scrollWheelZoom: false,
+      zoomControl: false
+    });
 
-    var osmLayer = new L.TileLayer(
+    const osmLayer = new L.TileLayer(
         'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         minZoom: 1,
         maxZoom: 13,
@@ -88,7 +89,7 @@ export default {
         }
     );
 
-    var markers = [];
+    const markers = [];
 
     map.setView(new L.LatLng(0, 0), 1);
     map.addLayer(osmLayer);
@@ -184,8 +185,8 @@ export default {
       daily: [],
       location: {
         name: "Tokyo, Japan",
-        lat: 35.48847,
-        lon: 137.5263065
+        lat: 35.6828,
+        lon: 139.759
       }
     };
   },

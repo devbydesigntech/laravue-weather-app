@@ -1908,6 +1908,9 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only"); }
+
+//
 //
 //
 //
@@ -2001,7 +2004,7 @@ __webpack_require__.r(__webpack_exports__);
 
     function handleOnSuggestions(e) {
       markers.forEach(removeMarker);
-      markers = [];
+      markers = (_readOnlyError("markers"), []);
 
       if (e.suggestions.length === 0) {
         map.setView(new L.LatLng(0, 0), 1);
@@ -2015,7 +2018,7 @@ __webpack_require__.r(__webpack_exports__);
     function handleOnChange(e) {
       markers.forEach(function (marker, markerIndex) {
         if (markerIndex === e.suggestionIndex) {
-          markers = [marker];
+          markers = (_readOnlyError("markers"), [marker]);
           marker.setOpacity(1);
           findBestZoom();
         } else {
@@ -2089,8 +2092,8 @@ __webpack_require__.r(__webpack_exports__);
       daily: [],
       location: {
         name: "Tokyo, Japan",
-        lat: 35.48847,
-        lon: 137.5263065
+        lat: 35.6828,
+        lon: 139.759
       }
     };
   },

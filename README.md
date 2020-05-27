@@ -17,6 +17,10 @@ Clone or download the repository.
 Deploy on `localhost:8001`.
  
 ## Security
+Update `.env` settings: 
+```
+OPENWEATHERMAP_KEY={your key}
+```
 If you discover any security related issues, please email devbydesign.tech@gmail.com.
  
 ## License
