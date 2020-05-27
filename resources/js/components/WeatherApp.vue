@@ -6,6 +6,7 @@
 
       <p>Selected: <strong id="address-value">none</strong></p>
     </div>
+    <!-- Main Container -->
     <div class="weather-container font-sans w-128 max-w-lg rounded-lg overflow-hidden bg-gray-900 shadow-lg mt-4">
       <div class="current-weather flex items-center justify-between px-6 py-8">
         <div class="flex items-center">
@@ -24,7 +25,7 @@
         <div>Humidity: {{ currentTemperature.humidity }}%</div>
         <div><img :src="`https://openweathermap.org/img/wn/${currentTemperature.icon}@2x.png`"></div>
       </div>
-
+      <!-- Three Day Forecast Container -->
       <div class="future-weather text-sm bg-gray-800 px-6 py-8 overflow-hidden">
         <div 
             v-for="(day, index) in dailyThreeDays" 
@@ -44,11 +45,9 @@
                 <div>{{ Math.round(day.temp.min) }}&deg;C</div>
             </div>
         </div>
-
       </div>
-      <div id="map-example-container">
-
-      </div>
+      <!-- Map Container -->
+      <div id="map-example-container"></div>
     </div>
   </div>
 </template>
@@ -58,12 +57,14 @@ export default {
   mounted() {
     this.fetchData()
 
+    // Leaflet Map API OK to be exposed
     const placesAutocomplete = places({
         appId: 'plEMJKXHGKZL',
         apiKey: 'dcbfdd49e960293286f055c4dfeb4c5c',
         container: document.querySelector('#input-map')
       });
 
+    // Auto-suggestion for addresses and places
     const $address = document.querySelector('#address-value')
       placesAutocomplete.on('change', (e) => {
         $address.textContent = e.suggestion.value
@@ -76,11 +77,14 @@ export default {
         $address.textContent = 'none';
       });
     
+    // Map Container
     const map = L.map('map-example-container', {
       scrollWheelZoom: false,
       zoomControl: false
     });
 
+    
+    // OpenStreetMap Copyright
     const osmLayer = new L.TileLayer(
         'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         minZoom: 1,
@@ -89,6 +93,7 @@ export default {
         }
     );
 
+    // Markers on map
     const markers = [];
 
     map.setView(new L.LatLng(0, 0), 1);
@@ -207,6 +212,8 @@ export default {
           this.currentTemperature.low = Math.round(data.daily[0].temp.min)
         });
     },
+
+    //Unix Timestamp conversions
     toDayOfWeek(timestamp) {
         const newDate = new Date(timestamp*1000)
         const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT']
@@ -227,6 +234,7 @@ export default {
         return time;
     },
   },
+  // Capitalize first letter; Openweathermap returns description in all lowercase
   filters: {
       capitalize: function (value) {
           if (!value) return ''

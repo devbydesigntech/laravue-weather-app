@@ -1964,17 +1964,18 @@ function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only")
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   mounted: function mounted() {
     var _this = this;
 
-    this.fetchData();
+    this.fetchData(); // Leaflet Map API OK to be exposed
+
     var placesAutocomplete = places({
       appId: 'plEMJKXHGKZL',
       apiKey: 'dcbfdd49e960293286f055c4dfeb4c5c',
       container: document.querySelector('#input-map')
-    });
+    }); // Auto-suggestion for addresses and places
+
     var $address = document.querySelector('#address-value');
     placesAutocomplete.on('change', function (e) {
       $address.textContent = e.suggestion.value;
@@ -1984,16 +1985,19 @@ function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only")
     });
     placesAutocomplete.on('clear', function () {
       $address.textContent = 'none';
-    });
+    }); // Map Container
+
     var map = L.map('map-example-container', {
       scrollWheelZoom: false,
       zoomControl: false
-    });
+    }); // OpenStreetMap Copyright
+
     var osmLayer = new L.TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       minZoom: 1,
       maxZoom: 13,
       attribution: 'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors'
-    });
+    }); // Markers on map
+
     var markers = [];
     map.setView(new L.LatLng(0, 0), 1);
     map.addLayer(osmLayer);
@@ -2116,6 +2120,7 @@ function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only")
         _this2.currentTemperature.low = Math.round(data.daily[0].temp.min);
       });
     },
+    //Unix Timestamp conversions
     toDayOfWeek: function toDayOfWeek(timestamp) {
       var newDate = new Date(timestamp * 1000);
       var days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
@@ -2134,6 +2139,7 @@ function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only")
       return time;
     }
   },
+  // Capitalize first letter; Openweathermap returns description in all lowercase
   filters: {
     capitalize: function capitalize(value) {
       if (!value) return '';
