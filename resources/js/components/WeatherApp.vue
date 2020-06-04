@@ -23,7 +23,7 @@
           </div>
         </div>
         <div>Humidity: {{ currentTemperature.humidity }}%</div>
-        <div><img :src="`https://openweathermap.org/img/wn/${currentTemperature.icon}@2x.png`"></div>
+        <div><img :src="weatherIcons"></div>
       </div>
       <!-- Three Day Forecast Container -->
       <div class="future-weather text-sm bg-gray-800 px-6 py-8 overflow-hidden">
@@ -58,7 +58,7 @@ export default {
     this.fetchData()
 
     // Leaflet Map API OK to be exposed
-    const placesAutocomplete = places({
+    var placesAutocomplete = places({
         appId: 'plEMJKXHGKZL',
         apiKey: 'dcbfdd49e960293286f055c4dfeb4c5c',
         container: document.querySelector('#input-map')
@@ -78,14 +78,14 @@ export default {
       });
     
     // Map Container
-    const map = L.map('map-example-container', {
+    var map = L.map('map-example-container', {
       scrollWheelZoom: false,
       zoomControl: false
     });
 
     
     // OpenStreetMap Copyright
-    const osmLayer = new L.TileLayer(
+    var osmLayer = new L.TileLayer(
         'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         minZoom: 1,
         maxZoom: 13,
@@ -94,7 +94,7 @@ export default {
     );
 
     // Markers on map
-    const markers = [];
+    var markers = [];
 
     map.setView(new L.LatLng(0, 0), 1);
     map.addLayer(osmLayer);
@@ -192,7 +192,8 @@ export default {
         name: "Tokyo, Japan",
         lat: 35.6828,
         lon: 139.759
-      }
+      },
+      weatherIcons: null
     };
   },
   methods: {
@@ -210,6 +211,7 @@ export default {
           this.daily = data.daily
           this.currentTemperature.high = Math.round(data.daily[0].temp.max)
           this.currentTemperature.low = Math.round(data.daily[0].temp.min)
+          this.weatherIcons = `https://openweathermap.org/img/wn/${this.currentTemperature.icon}@2x.png`
         });
     },
 

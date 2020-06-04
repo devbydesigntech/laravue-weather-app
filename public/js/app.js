@@ -1908,8 +1908,6 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only"); }
-
 //
 //
 //
@@ -2008,7 +2006,7 @@ function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only")
 
     function handleOnSuggestions(e) {
       markers.forEach(removeMarker);
-      markers = (_readOnlyError("markers"), []);
+      markers = [];
 
       if (e.suggestions.length === 0) {
         map.setView(new L.LatLng(0, 0), 1);
@@ -2022,7 +2020,7 @@ function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only")
     function handleOnChange(e) {
       markers.forEach(function (marker, markerIndex) {
         if (markerIndex === e.suggestionIndex) {
-          markers = (_readOnlyError("markers"), [marker]);
+          markers = [marker];
           marker.setOpacity(1);
           findBestZoom();
         } else {
@@ -2098,7 +2096,8 @@ function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only")
         name: "Tokyo, Japan",
         lat: 35.6828,
         lon: 139.759
-      }
+      },
+      weatherIcons: null
     };
   },
   methods: {
@@ -2118,6 +2117,7 @@ function _readOnlyError(name) { throw new Error("\"" + name + "\" is read-only")
         _this2.daily = data.daily;
         _this2.currentTemperature.high = Math.round(data.daily[0].temp.max);
         _this2.currentTemperature.low = Math.round(data.daily[0].temp.min);
+        _this2.weatherIcons = "https://openweathermap.org/img/wn/".concat(_this2.currentTemperature.icon, "@2x.png");
       });
     },
     //Unix Timestamp conversions
@@ -38402,16 +38402,7 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _c("div", [
-              _c("img", {
-                attrs: {
-                  src:
-                    "https://openweathermap.org/img/wn/" +
-                    _vm.currentTemperature.icon +
-                    "@2x.png"
-                }
-              })
-            ])
+            _c("div", [_c("img", { attrs: { src: _vm.weatherIcons } })])
           ]
         ),
         _vm._v(" "),
